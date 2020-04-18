@@ -24,10 +24,7 @@ class MyDocument extends Document {
           <meta property="og:title" content="did0es - Learn WebGL" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta property="og:description" content="did0es - Learn WebGL" />
-          <meta
-            property="og:image"
-            content=""
-          />
+          <meta property="og:image" content="" />
           <link
             href="https://fonts.googleapis.com/css2?family=Almendra+Display&family=Song+Myung&family=Sarpanch&display=swap"
             rel="stylesheet"
