@@ -17,5 +17,17 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+}
+
+.ContentsWrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.Contents {
+  width: 320px;
+  height: 180px;
+  cursor: pointer;
+  margin: 64px;
 }

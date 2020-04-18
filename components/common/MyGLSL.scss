@@ -1,3 +1,8 @@
+.MyGLSLWrap {
+  width: 640px;
+  height: 360px;
+}
+
 .MyGLSLInfo {
   position: fixed;
   bottom: 0;
@@ -6,4 +11,9 @@
   margin-right: 64px;
   font-size: 1.8rem;
   letter-spacing: 1.2px;
+}
+
+.MyGLSLText {
+  display: flex;
+  justify-content: flex-end;
 }

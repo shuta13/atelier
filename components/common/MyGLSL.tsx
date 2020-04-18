@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Shaders, Node, GLSL } from "gl-react";
 import { Surface } from "gl-react-dom";
 import contents from "../../assets/data/contents.json";
+// import html2canvas from "html2canvas";
 
 const MyGLSL: React.FC<{ id: string; frag: string; vert: string }> = ({
   id,
@@ -26,14 +27,26 @@ const MyGLSL: React.FC<{ id: string; frag: string; vert: string }> = ({
       vert: GLSL`${vert}`,
     },
   });
+  // const handleOnClick = () => {
+  //   html2canvas(document.body)
+  //     .then((canvas) => {
+  //       const data = canvas.toDataURL();
+  //       const a = document.createElement("a")
+  //       a.href = data
+  //       a.download = `${id}.png`
+  //       a.click()
+  //     })
+  // }
   return (
     <div className="container">
-      <Surface width={640} height={360}>
-        <Node shader={shaders.GLSL} />
-      </Surface>
+      <div className="MyGLSLWrap">
+        <Surface width={640} height={360}>
+          <Node shader={shaders.GLSL} />
+        </Surface>
+      </div>
       <div className="MyGLSLInfo">
-        <p>{info.id}</p>
-        <p>{info.desc}</p>
+        <p className="MyGLSLText">{info.id}</p>
+        <p className="MyGLSLText">{info.desc}</p>
       </div>
     </div>
   );
