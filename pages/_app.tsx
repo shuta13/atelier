@@ -1,5 +1,6 @@
 import "../assets/style/styles.css";
-import "../assets/style/Global/Header.scss";
+import "../components/common/Header.scss";
+import "../components/common/MyGLSL.scss";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { Header } from "../components/common/Header";

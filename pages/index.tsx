@@ -1,7 +1,10 @@
 import React from "react";
+import contents from "../assets/data/contents.json"
 
 const Home = () => {
-  return <div>Hi There</div>;
+  return (
+    <div className="container">Hi There</div>
+  );
 };
 
 export default Home;
