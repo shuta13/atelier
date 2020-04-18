@@ -7,41 +7,6 @@
   {
     "id": "002",
     "img": "learn/002.png",
-    "desc": "写経"
-  },
-  {
-    "id": "003",
-    "img": "learn/003.png",
-    "desc": ""
-  },
-  {
-    "id": "004",
-    "img": "learn/004.png",
-    "desc": ""
-  },
-  {
-    "id": "005",
-    "img": "learn/005.png",
-    "desc": ""
-  },
-  {
-    "id": "006",
-    "img": "learn/006.png",
-    "desc": ""
-  },
-  {
-    "id": "007",
-    "img": "learn/007.png",
-    "desc": ""
-  },
-  {
-    "id": "008",
-    "img": "learn/008.png",
-    "desc": ""
-  },
-  {
-    "id": "009",
-    "img": "learn/009.png",
-    "desc": ""
+    "desc": "JS側でuniformsを作って色を表示した"
   }
 ]
