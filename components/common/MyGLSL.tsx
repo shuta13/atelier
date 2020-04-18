@@ -5,6 +5,17 @@ import { Surface } from "gl-react-dom";
 import contents from "../../assets/data/contents.json";
 // import html2canvas from "html2canvas";
 
+// const handleOnClick = (id: string) => {
+//   html2canvas(document.body)
+//     .then((canvas) => {
+//       const data = canvas.toDataURL();
+//       const a = document.createElement("a")
+//       a.href = data
+//       a.download = `${id}.png`
+//       a.click()
+//     })
+// }
+
 const MyGLSL: React.FC<{ frag: string; vert: string }> = ({
   frag,
   vert,
@@ -16,7 +27,6 @@ const MyGLSL: React.FC<{ frag: string; vert: string }> = ({
   };
   const router = useRouter()
   const id = router.pathname.split("/")[2]
-  console.log(id)
   contents.map((content) => {
     if (content.id === id) {
       info.id = content.id;
@@ -30,26 +40,16 @@ const MyGLSL: React.FC<{ frag: string; vert: string }> = ({
       vert: GLSL`${vert}`,
     },
   });
-  // const handleOnClick = () => {
-  //   html2canvas(document.body)
-  //     .then((canvas) => {
-  //       const data = canvas.toDataURL();
-  //       const a = document.createElement("a")
-  //       a.href = data
-  //       a.download = `${id}.png`
-  //       a.click()
-  //     })
-  // }
   return (
     <div className="container">
       <div className="MyGLSLWrap">
-        <Surface width={640} height={360}>
+        <Surface width={400} height={400}>
           <Node shader={shaders.GLSL} />
         </Surface>
       </div>
       <div className="MyGLSLInfo">
-        <p className="MyGLSLText">{info.id}</p>
-        <p className="MyGLSLText">{info.desc}</p>
+        <div className="MyGLSLText">{info.id}</div>
+        <div className="MyGLSLText">{info.desc}</div>
       </div>
     </div>
   );
