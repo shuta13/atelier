@@ -1,9 +1,5 @@
 import React from "react";
-import dynamic from "next/dynamic";
-
-const MyGLSL = dynamic(() => import("../../../components/common/MyGLSL"), {
-  ssr: false,
-});
+import MyGLSL from "../../../components/common/MyGLSL"
 
 const frag = require("./shader/frag.glsl");
 
