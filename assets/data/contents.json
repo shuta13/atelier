@@ -8,5 +8,10 @@
     "id": "002",
     "img": "learn/002.png",
     "desc": "JS側でuniformsを作って色を表示した"
+  },
+  {
+    "id": "003",
+    "img": "learn/003.png",
+    "desc": ""
   }
 ]
