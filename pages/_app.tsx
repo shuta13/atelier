@@ -1,3 +1,4 @@
+import "../assets/style/styles.css";
 import { AppProps } from "next/app";
 import Head from "next/head";
 
