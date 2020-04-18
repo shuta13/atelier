@@ -16,17 +16,18 @@ import contents from "../../assets/data/contents.json";
 //     })
 // }
 
-const MyGLSL: React.FC<{ frag: string; vert: string }> = ({
+const MyGLSL: React.FC<{ frag: string; vert: string; uniforms?: object }> = ({
   frag,
   vert,
+  uniforms,
 }) => {
   const info = {
     id: "",
     img: "",
     desc: "",
   };
-  const router = useRouter()
-  const id = router.pathname.split("/")[2]
+  const router = useRouter();
+  const id = router.pathname.split("/")[2];
   contents.map((content) => {
     if (content.id === id) {
       info.id = content.id;
@@ -44,7 +45,7 @@ const MyGLSL: React.FC<{ frag: string; vert: string }> = ({
     <div className="container">
       <div className="MyGLSLWrap">
         <Surface width={400} height={400}>
-          <Node shader={shaders.GLSL} />
+          <Node shader={shaders.GLSL} uniforms={uniforms} />
         </Surface>
       </div>
       <div className="MyGLSLInfo">

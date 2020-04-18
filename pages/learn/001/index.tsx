@@ -1,5 +1,5 @@
 import React from "react";
-import MyGLSL from "../../../components/common/MyGLSL"
+import MyGLSL from "../../../components/common/MyGLSL";
 
 const frag = require("./shader/001.frag");
 
