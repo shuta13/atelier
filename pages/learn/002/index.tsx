@@ -14,7 +14,11 @@ const _002: React.FC = () => {
     requestRef.current = requestAnimationFrame(animate)
     return () => cancelAnimationFrame(requestRef.current)
   }, [animate])
-  return <MyGLSL frag={frag.default} vert="" uniforms={{ u_time: uTime }} />;
+  return <MyGLSL frag={frag.default} vert="" uniforms={{ 
+    u_resolution: [400, 400],
+    // u_mouse: [x, y],
+    // u_time: uTime
+  }} />;
 };
 
 export default _002;
