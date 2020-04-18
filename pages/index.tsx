@@ -8,8 +8,8 @@ const Home = () => {
       <div className="ContentsWrap">
       {
         contents.map((content) => (
-          <Link href={`/learn/${content.id}`}>
-            <img className="Contents" src={content.img} alt={`${content.id} Image`} />
+          <Link href={`/learn/${content.id}`} key={content.id}>
+            <img className="Contents" src={content.img} alt={`${content.id} Image`}/>
           </Link>
         ))
       }
