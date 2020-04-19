@@ -17,6 +17,11 @@
   {
     "id": "004",
     "img": "learn/004.png",
+    "desc": "rgbを混ぜて表示した"
+  },
+  {
+    "id": "005",
+    "img": "learn/005.png",
     "desc": ""
   }
 ]
