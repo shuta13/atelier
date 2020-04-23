@@ -3,34 +3,61 @@ precision mediump float;
 #endif
 
 uniform vec2 u_resolution;
+uniform float u_time;
 
-float drawRect(vec2 st, float size) {
-  vec2 bl = step(vec2(0.8 - size), st);
-  float pct = bl.x + bl.y;
-  vec2 tr = step(vec2(0.8 - size), 1.0 - st);
-  return pct *= tr.x + tr.y;
+float drawSmoothCircle(vec2 st, float t1, float t2, bool isInvert) {
+  return isInvert
+    ? 1.0 - smoothstep(t1, t2, distance(st, vec2(0.5)))
+    : smoothstep(t1, t2, distance(st, vec2(0.5)));
+
 }
 
-// float drawStroke() {
-// }
-
 void main() {
-  vec2 st = gl_FragCoord.xy / u_resolution.xy;
-  vec3 color = vec3(0.0);
+  vec2 st = gl_FragCoord.xy / u_resolution;
+  float pct = 0.0;
 
-  // float left = step(0.1, st.x);
-  // float bottom = step(0.1, st.y);
-  // color = vec3(left * bottom);
+  // (st.x, st.y)までの距離を(0.5, 0.5)から等しくする
+  // pct = distance(st, vec2(0.5));
 
-  // // 上の省略形
-  // vec2 bl = smoothstep(vec2(0.1), vec2(0.5), st);
-  // float pct = bl.x * bl.y;
+  // lengthで↑を書き換え
+  // vec2 toCenter = vec2(0.5) - st;
+  // pct = length(toCenter);
 
-  // // st座標を反転して同じ処理
-  // vec2 tr = smoothstep(vec2(0.1), vec2(0.5), 1.0 - st);
-  // pct *= tr.x * tr.y;
+  // sqrtで更に↑を書き換え
+  // vec2 tC = vec2(0.5) - st;
+  // pct = sqrt(tC.x * tC.x + tC.y * tC.y);
 
-  color = vec3(drawRect(st, 0.1));
+  // 円を四角の中におさめた
+  // pct = distance(st * 2.0, vec2(1.0));
 
+  // stepで白黒で塗り分け
+  // pct = step(0.5, distance(st, vec2(0.5)));
+
+  // ↑を反転
+  // pct = 1.0 - step(0.5, distance(st, vec2(0.5)));
+
+  // smoothstep by func
+  // pct = drawSmoothCircle(st, 0.0, 0.5, false);
+
+  // pulse animation
+  // pct = step(0.0 + abs(sin(u_time * 1.0)), distance(st, vec2(0.5)));
+
+  // 円を2つ表示
+  // pct = smoothstep(0.0, 0.5, distance((st * 2.0), vec2(0.5)));
+  // pct *= smoothstep(0.0, 0.5, distance(st * 2.0, vec2(1.5)));
+
+  // 複数のディスタンスフィールドの組み合わせを試す
+  // 円が2つ
+  // pct = distance(st,vec2(0.4)) + distance(st,vec2(0.6));
+  // 角の取れた四角?
+  // pct = distance(st,vec2(0.4)) * distance(st,vec2(0.6));
+  // 円が2つぶつかりあった感じ
+  // pct = min(distance(st,vec2(0.4)),distance(st,vec2(0.6)));
+  // ↑がもう少し接近した感じ
+  // pct = max(distance(st,vec2(0.4)),distance(st,vec2(0.6)));
+  // 白と黒、中心から離れるにつれて減衰
+  // pct = pow(distance(st,vec2(0.4)),distance(st,vec2(0.6)));
+
+  vec3 color = vec3(pct);
   gl_FragColor = vec4(color, 1.0);
 }
