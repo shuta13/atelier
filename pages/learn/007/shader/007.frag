@@ -47,7 +47,7 @@ void main() {
   // pct = smoothstep(0.0, 0.4, distance((st * 2.0), vec2(0.5)));
   // pct *= smoothstep(0.0, 0.4, distance(st * 2.0, vec2(1.5)));
   // 白
-  pct = 1.0 - smoothstep(0.0, 0.4, distance((st * 2.0), vec2(0.5)));
+  pct = 1.0 - smoothstep(0.0, 0.4, distance(st * 2.0, vec2(0.5)));
   pct += 1.0 - smoothstep(0.0, 0.4, distance(st * 2.0, vec2(1.5)));
 
   // 複数のディスタンスフィールドの組み合わせを試す
