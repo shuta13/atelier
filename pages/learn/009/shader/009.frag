@@ -5,32 +5,33 @@ precision mediump float;
 uniform vec2 u_resolution;
 uniform float u_time;
 
-float fn(vec2 st, float w) {
-  return 1.0 - step(abs(sin(u_time * 2.0)), distance(sin((st *= sin(u_time) * 0.2) * 18.0), vec2(w + sin(u_time))));
+float circle (in vec2 _st, in float _radius) {
+  vec2 dist = _st - vec2(0.5);
+  return 1.0 - smoothstep(_radius - (_radius * 0.01), _radius + (_radius * 0.01), dot(dist, dist) * 4.0);
 }
 
 void main() {
   vec2 st = gl_FragCoord.xy / u_resolution;
-  float pct = 0.0;
-  // 12 x 4 ^ 2　個の円を表示、(1.0, 1.0)方向に移動するアニメーション
-  // pct = 1.0 - smoothstep(0.0, 0.4, distance(sin((st + u_time * 0.15) * 72.0), vec2(0.5)));
-  // pct += 1.0 - smoothstep(0.0, 0.4, distance(sin((st + u_time * 0.15) * 72.0), vec2(1.5)));
 
-  // 12 x 4 ^ 2　個の円を表示、点滅するアニメーション
-  // pct = 1.0 - smoothstep(0.0, 0.4 + abs(sin(u_time)), distance(sin(st * 72.0), vec2(0.5)));
-  // pct += 1.0 - smoothstep(0.0, 0.4 + abs(sin(u_time)), distance(sin(st * 72.0), vec2(1.5)));
+  // dotのディスタンスフィールドで円を書く
+  // vec3 color = vec3(circle(st, 0.9));
+  // gl_FragColor = vec4(color, 1.0);
 
-  // 12 x 4 ^ 2　個の円をマージするアニメーション
-  // pct = 1.0 - smoothstep(0.0, 0.4, distance(sin(st * 72.0), vec2(0.5 + abs(sin(u_time)))));
-  // pct += 1.0 - smoothstep(0.0, 0.4, distance(sin(st * 72.0), vec2(1.5 + abs(sin(u_time)))));
+  st.x *= u_resolution.x / u_resolution.y;
+  vec3 color = vec3(0.0);
+  float d = 0.0;
 
-  // ↑全部合わせたもの、点の数は減らした
-  pct = 1.0 - smoothstep(0.0, 0.4 + abs(sin(u_time * 3.0)), distance(sin((st + u_time * 0.15) * 48.0), vec2(0.5 + (sin(u_time)))));
-  pct += 1.0 - smoothstep(0.0, 0.4 + abs(sin(u_time * 3.0)), distance(sin((st + u_time * 0.15) * 48.0), vec2(1.5 + (sin(u_time)))));
-  vec3 color = vec3(pct);
-  gl_FragColor = vec4(color, 1.0);
+  // 座標系の中心を-1 ~ 1に移動
+  st = st * 2.0 - 1.0;
 
-  // より動きを大きくしたもの
-  // gl_FragColor = vec4(fn(st, 1.5) + fn(st, 0.5));
+  // ディスタンスフィールドを作る
+  d = length(abs(st) - 0.3);
+  // d = length(min(abs(st) - 0.3, 0.0));
+  // d = length(max(abs(st) - 0.3, 0.0));
+
+  // gl_FragColor = vec4(vec3(fract(d * 10.0)), 1.0);
+  // gl_FragColor = vec4(vec3(step(0.3, d)), 1.0);
+  // gl_FragColor = vec4(vec3(step(0.3, d) * step(d, 0.4)), 1.0);
+  gl_FragColor = vec4(vec3(smoothstep(0.3, 0.4, d) * smoothstep(0.6, 0.5, d)) ,1.0);
 
 }
