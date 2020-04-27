@@ -13,11 +13,6 @@
   letter-spacing: 1.2px;
 }
 
-.MyGLSLText {
-  display: flex;
-  justify-content: flex-end;
-}
-
 @media screen and (max-width: 615px) {
   .MyGLSLInfo {
     position: relative;
@@ -26,5 +21,17 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+  }
+}
+
+.MyGLSLText {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 615px) {
+  .MyGLSLText {
+    width: 100%;
+    justify-content: center;
   }
 }
