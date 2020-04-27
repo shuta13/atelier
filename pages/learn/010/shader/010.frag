@@ -29,7 +29,7 @@ void main() {
   // f = abs(cos(a * 3.0));
   // f = abs(cos(a * 2.5)) * 0.5 + 0.3;
   // f = abs(cos(a * 12.0) * sin(a * 3.0)) * 0.8 + 0.1;
-  f = smoothstep(-0.5, 1.0, cos(a * 10.0 + u_time)) * 0.2 + 0.4;
+  f = smoothstep(-0.5, 1.0, cos(a * 10.0 + u_time * 2.0)) * 0.2 + 0.4;
 
   color = vec3(1.0 - smoothstep(f, f + 0.02, r));
   color -= vec3(circle(st, 0.1));
