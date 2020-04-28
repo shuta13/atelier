@@ -13,7 +13,7 @@ const Home = () => {
             <Link href={`/learn/${content.id}`} key={content.id}>
               <img
                 className="Contents"
-                src={content.img}
+                src={`learn/${content.id}.png`}
                 alt={`${content.id} Image`}
               />
             </Link>

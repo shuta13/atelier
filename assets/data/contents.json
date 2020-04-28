@@ -1,67 +1,58 @@
 [
   {
     "id": "001",
-    "img": "learn/001.png",
     "desc": "拾ってきたシェーダーをNext.js上で表示出来るようにした"
   },
   {
     "id": "002",
-    "img": "learn/002.png",
     "desc": "JS側でuniformsを作って色を表示した"
   },
   {
     "id": "003",
-    "img": "learn/003.png",
     "desc": "kyndの関数から一個選んで表示した"
   },
   {
     "id": "004",
-    "img": "learn/004.png",
     "desc": "rgbを混ぜて表示した"
   },
   {
     "id": "005",
-    "img": "learn/005.png",
     "desc": "color pickerの色を表示"
   },
   {
     "id": "006",
-    "img": "learn/006.png",
     "desc": "step関数で四角形を2つ表示した"
   },
   {
     "id": "007",
-    "img": "learn/007.png",
     "desc": "distance関数で円を２つ表示した"
   },
   {
     "id": "008",
-    "img": "learn/008.png",
     "desc": "複数の点を表示し、アニメーションさせた"
   },
   {
     "id": "009",
-    "img": "learn/009.png",
     "desc": "sqrt関数等を使わずにディスタンスフィールドで円を描いて表示した"
   },
   {
     "id": "010",
-    "img": "learn/010.png",
     "desc": "009の円を描く関数と組み合わせて歯車を表示した"
   },
   {
     "id": "011",
-    "img": "learn/011.png",
     "desc": "ディスタンスフィールドをアレコレ組み合わせてたら車輪ぽいものができた"
   },
   {
     "id": "012",
-    "img": "learn/012.png",
     "desc": "平行移動、回転、拡大縮小の行列計算を組み合わせてアニメーションさせた"
   },
   {
     "id": "013",
-    "img": "learn/013.png",
     "desc": "タイリングとmodを組み合わせてtic-tac-toeのような模様を表示した"
+  },
+  {
+    "id": "014",
+    "desc": ""
   }
 ]
