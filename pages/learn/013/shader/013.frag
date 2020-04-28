@@ -27,11 +27,19 @@ mat2 rotate2d(float _angle){
   return mat2(cos(_angle),-sin(_angle),sin(_angle),cos(_angle));
 }
 
+vec2 tiling(vec2 _st, float number) {
+  _st *= number;
+  return fract(_st);
+}
+
 void main() {
   vec2 st = gl_FragCoord.xy / u_resolution.xy;
   vec3 color = vec3(0.0);
-  st *= 3.0;
-  st = fract(st);
+  float n = 3.0;
+  // st = fract(st);
+  vec2 st_p = tiling(st, n);
+  st *= n;
+
   // color = vec3(st, 0.0);
 
   // circle
@@ -39,10 +47,33 @@ void main() {
   // color -= vec3(circle(st, 0.3));
 
   // cross
-  st -= vec2(0.5);
-  st = rotate2d(0.75 * PI) * st;
-  st += vec2(0.5);
-  color += vec3(cross(st, 0.5));
+  // st -= vec2(0.5);
+  // st = rotate2d(0.75 * PI) * st;
+  // st += vec2(0.5);
+  // color += vec3(cross(st, 0.5));
+
+  // for (float i = 0.0; i < 3.0; i++) {
+  //   if (mod(floor(st.x), i) == 1.0 && mod(floor(st.y), i) == 2.0) {
+  //     // circle
+  //     color = vec3(circle(st, 0.5));
+  //     color -= vec3(circle(st, 0.3));
+  //   } else {
+  //     st -= vec2(0.5);
+  //     st = rotate2d(0.75 * PI) * st;
+  //     st += vec2(0.5);
+  //     color += vec3(cross(st, 0.5));
+  //   }
+  // }
+
+  if (mod(st.x, 3.0) > 2.0 || mod(st.y, 3.0) > 1.0) {
+    color = vec3(circle(st_p, 0.5));
+    color -= vec3(circle(st_p, 0.3));
+  } else {
+    st_p -= vec2(0.5);
+    st_p = rotate2d(0.75 * PI) * st_p;
+    st_p += vec2(0.5);
+    color += vec3(cross(st_p, 0.5));
+  }
 
   gl_FragColor = vec4(color, 1.0);
 }

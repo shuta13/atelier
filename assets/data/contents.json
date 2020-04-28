@@ -62,6 +62,6 @@
   {
     "id": "013",
     "img": "learn/013.png",
-    "desc": ""
+    "desc": "タイリングとmodを組み合わせてtic-tac-toeのような模様を表示した"
   }
 ]
