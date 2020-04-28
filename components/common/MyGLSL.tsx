@@ -31,7 +31,6 @@ const MyGLSL: React.FC<{ frag: string; vert: string; uniforms?: object }> = ({
   contents.map((content) => {
     if (content.id === id) {
       info.id = content.id;
-      info.img = content.img;
       info.desc = content.desc;
     }
   });
