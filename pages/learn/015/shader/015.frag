@@ -64,7 +64,7 @@ void main(void){
 
   // Apply the brick tiling
   st = brickTile(st, 10.0);
-  color = vec3(step(0.4, length(st - 0.5)));
+  color = vec3(step(0.4, length(st - 0.5)) * 1.1, .6, .8);
 
   // Uncomment to see the space coordinates
   // color = vec3(st,0.0);
