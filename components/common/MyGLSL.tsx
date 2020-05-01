@@ -1,7 +1,5 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useRouter } from "next/router";
-import { Shaders, Node, GLSL } from "gl-react";
-import { Surface } from "gl-react-dom";
 import contents from "../../assets/data/contents.json";
 import {
   Scene,
@@ -12,7 +10,6 @@ import {
   Mesh,
   Vector2,
 } from "three";
-
 // import html2canvas from "html2canvas";
 
 // const handleOnClick = (id: string) => {
@@ -76,18 +73,9 @@ const MyGLSL: React.FC<{
     renderer.setSize(400, 400);
     renderer.render(scene, camera);
   };
-  // const shaders = Shaders.create({
-  //   GLSL: {
-  //     frag: GLSL`${frag}`,
-  //     vert: GLSL`${vert}`,
-  //   },
-  // });
   return (
     <div className="container">
       <div className="MyGLSLWrap">
-        {/* <Surface width={400} height={400}>
-          <Node shader={shaders.GLSL} uniforms={uniforms} />
-        </Surface> */}
         <canvas ref={onCanvasLoaded} />
       </div>
       <div className="MyGLSLInfo">

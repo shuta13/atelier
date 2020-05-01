@@ -16,12 +16,8 @@
     "three": "^0.116.0"
   },
   "devDependencies": {
-    "@types/gl-react": "^3.15.2",
-    "@types/gl-react-dom": "^3.15.3",
     "@types/node": "^13.13.0",
     "@types/react": "^16.9.34",
-    "gl-react": "^4.0.1",
-    "gl-react-dom": "^4.0.1",
     "html2canvas": "^1.0.0-rc.5",
     "next-images": "^1.4.0",
     "prettier": "^2.0.4",
