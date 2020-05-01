@@ -20,7 +20,7 @@ const _016: React.FC = () => {
       frag={frag.default}
       vert={vert.default}
       uniforms={{
-        u_resolution: [400, 400],
+        u_resolution: [800, 800],
         // u_mouse: [x, y],
         u_time: uTime,
       }}

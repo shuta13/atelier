@@ -24,8 +24,7 @@ float plot(in vec2 _st, float pct) {
 
 void main() {
   vec2 st = gl_FragCoord.xy / u_resolution.xy;
-  st.y *= 2.;
-  st.x *= .5;
+  st.y *= 4.;
   vec2 _st = fract(st);
   vec3 color = vec3(0.0);
   float d = noise(_st.x + u_time);
