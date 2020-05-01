@@ -1,10 +1,11 @@
 import React from "react";
 import MyGLSL from "../../../components/common/MyGLSL";
 
-const frag = require("./shader/001.frag");
+const frag = require("./shader/index.frag");
+const vert = require("./shader/index.vert");
 
 const _001: React.FC = () => {
-  return <MyGLSL frag={frag.default} vert="" />;
+  return <MyGLSL frag={frag.default} vert={vert.default} />;
 };
 
 export default _001;

@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import MyGLSL from "../../../components/common/MyGLSL";
 
-const frag = require("./shader/015.frag");
+const frag = require("./shader/index.frag");
+const vert = require("./shader/index.vert");
 
 const _015: React.FC = () => {
   const [uTime, setUTime] = useState(0.0);
@@ -17,7 +18,7 @@ const _015: React.FC = () => {
   return (
     <MyGLSL
       frag={frag.default}
-      vert=""
+      vert={vert.default}
       uniforms={{
         u_resolution: [400, 400],
         // u_mouse: [x, y],
