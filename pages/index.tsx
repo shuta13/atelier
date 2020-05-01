@@ -17,14 +17,14 @@ const Home = () => {
             />
           </Link>
         ))}
-        {reversed.length % 3 === 1 ? (
+        {/* {reversed.length % 3 === 1 ? (
           <>
             <img className="Contents" src="" alt="" />
             <img className="Contents" src="" alt="" />
           </>
         ) : reversed.length % 3 === 2 ? (
           <img className="Contents" src="" alt="" />
-        ) : null}
+        ) : null} */}
       </div>
     </div>
   );
