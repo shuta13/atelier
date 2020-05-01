@@ -66,11 +66,11 @@ float box(in vec2 _st, vec2 size) {
 void main (void) {
   vec2 st = gl_FragCoord.xy/u_resolution.xy;
 
-  float n = 3.5;
+  float n = 4.;
   if (mod(u_time, 3.) > 2.) {
-    n = 9.5;
+    n = 16.;
   } else if (mod(u_time, 3.) > 1. && mod(u_time, 3.) <= 2.) {
-    n = 6.5;
+    n = 10.;
   }
   vec2 _st = tile(st, n);
   _st = rotateTilePattern(_st);
