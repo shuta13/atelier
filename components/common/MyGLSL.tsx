@@ -3,6 +3,16 @@ import { useRouter } from "next/router";
 import { Shaders, Node, GLSL } from "gl-react";
 import { Surface } from "gl-react-dom";
 import contents from "../../assets/data/contents.json";
+import {
+  Scene,
+  OrthographicCamera,
+  WebGLRenderer,
+  PlaneBufferGeometry,
+  ShaderMaterial,
+  Mesh,
+  Vector2,
+} from "three";
+
 // import html2canvas from "html2canvas";
 
 // const handleOnClick = (id: string) => {
@@ -16,11 +26,11 @@ import contents from "../../assets/data/contents.json";
 //     })
 // }
 
-const MyGLSL: React.FC<{ frag: string; vert: string; uniforms?: object }> = ({
-  frag,
-  vert,
-  uniforms,
-}) => {
+const MyGLSL: React.FC<{
+  frag: string;
+  vert: string;
+  uniforms?: { u_time: number; u_resolution: Array<number> };
+}> = ({ frag, vert, uniforms }) => {
   const info = {
     id: "",
     img: "",
@@ -34,18 +44,51 @@ const MyGLSL: React.FC<{ frag: string; vert: string; uniforms?: object }> = ({
       info.desc = content.desc;
     }
   });
-  const shaders = Shaders.create({
-    GLSL: {
-      frag: GLSL`${frag}`,
-      vert: GLSL`${vert}`,
-    },
-  });
+  const onCanvasLoaded = (canvas: HTMLCanvasElement) => {
+    if (!canvas) return;
+    const scene = new Scene();
+    const camera = new OrthographicCamera(-1, 1, 1, -1, 0, -1);
+    scene.add(camera);
+    const geometry = new PlaneBufferGeometry(2, 2);
+    const _uniforms = {
+      u_time: {
+        type: "f",
+        value: uniforms !== undefined ? uniforms.u_time : 1.0,
+      },
+      u_resolution: {
+        type: "v2",
+        value:
+          uniforms !== undefined
+            ? new Vector2(uniforms.u_resolution[0], uniforms.u_resolution[1])
+            : new Vector2()
+      }
+    };
+    const material = new ShaderMaterial({
+      uniforms: _uniforms,
+      vertexShader: vert,
+      fragmentShader: frag
+    })
+    const mesh = new Mesh(geometry, material);
+    scene.add(mesh);
+    const renderer = new WebGLRenderer({ canvas: canvas, antialias: false });
+    renderer.setClearColor("#1d1d1d")
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(400, 400);
+    renderer.render(scene, camera);
+  };
+  // const shaders = Shaders.create({
+  //   GLSL: {
+  //     frag: GLSL`${frag}`,
+  //     vert: GLSL`${vert}`,
+  //   },
+  // });
   return (
     <div className="container">
       <div className="MyGLSLWrap">
-        <Surface width={400} height={400}>
+        {/* <Surface width={400} height={400}>
           <Node shader={shaders.GLSL} uniforms={uniforms} />
-        </Surface>
+        </Surface> */}
+        <canvas ref={onCanvasLoaded} />
       </div>
       <div className="MyGLSLInfo">
         <div className="MyGLSLText">{info.id}</div>

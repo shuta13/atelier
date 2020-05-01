@@ -12,7 +12,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Head>
-        <meta property="og:image" content={`https://learn-webgl.now.sh${ogImageName}.png`} />
+        <meta
+          property="og:image"
+          content={`https://learn-webgl.now.sh${ogImageName}.png`}
+        />
         <title>did0es - Learn WebGL</title>
       </Head>
       <Header />
