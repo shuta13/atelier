@@ -6,7 +6,7 @@ import {
   OrthographicCamera,
   WebGLRenderer,
   PlaneBufferGeometry,
-  ShaderMaterial,
+  RawShaderMaterial,
   Mesh,
   Vector2,
 } from "three";
@@ -60,7 +60,7 @@ const MyGLSL: React.FC<{
             : new Vector2()
       }
     };
-    const material = new ShaderMaterial({
+    const material = new RawShaderMaterial({
       uniforms: _uniforms,
       vertexShader: vert,
       fragmentShader: frag
