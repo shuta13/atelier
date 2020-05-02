@@ -94,8 +94,6 @@ void main() {
   vec3 color = vec3(0.0);
   float t = 1.;
   st += noise(st * 2.) * t;
-  // color = vec3( noise(pos)*.5+.5 );
-  // color = vec3(1.) * smoothstep(.18, .2, noise(st));
 
   if (mod(u_time, 6.) > 4.0) {
     color += vec3(mix(st.y, st.y, noise(st * 4.)), .4, .4);
