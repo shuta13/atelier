@@ -96,8 +96,15 @@ void main() {
   st += noise(st * 2.) * t;
   // color = vec3( noise(pos)*.5+.5 );
   // color = vec3(1.) * smoothstep(.18, .2, noise(st));
-  // color += vec3(.4, mix(st.y, st.y, noise(st * 4.)), .6);
-  color += vec3(.6, mix(st.y, st.y, noise(st * 4.)), .8);
+
+  if (mod(u_time, 6.) > 4.0) {
+    color += vec3(.4, mix(st.y, st.y, noise(st * 4.)), .6);
+  } else if (mod(u_time, 6.) < 4.0 && mod(u_time, 6.) > 2.0) {
+    color += vec3(.75, mix(st.y, st.y, noise(st * 4.)), .8);
+  } else {
+    color += vec3(.75, mix(st.y, st.y, noise(st * 4.)), .2);
+  }
+
   color += smoothstep(.0, .9, noise(st * 4. + u_time * 2.));
   gl_FragColor = vec4(color, 1.0);
 }
