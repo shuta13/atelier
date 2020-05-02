@@ -95,6 +95,7 @@ void main() {
   float t = 1.;
   st += noise(st * 2.) * t;
 
+  // ベースのグラデーション
   if (mod(u_time, 6.) > 4.0) {
     color += vec3(mix(st.y, st.y, noise(st * 4.)), .4, .4);
   } else if (mod(u_time, 6.) < 4.0 && mod(u_time, 6.) > 2.0) {
@@ -103,6 +104,7 @@ void main() {
     color += vec3(.2, .7, mix(st.y, st.y, noise(st * 4.)) * .8);
   }
 
+  // 光沢
   color += smoothstep(.0, .9, noise(st * 4. + u_time * 2.));
   gl_FragColor = vec4(color, 1.0);
 }
