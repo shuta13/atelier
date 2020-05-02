@@ -87,7 +87,7 @@ float noise(vec2 st) {
 //   gl_FragColor = vec4(vec3(pattern) ,1.0);
 // }
 
-// 大理石模様
+// 大理石模様 -> ナイロン
 void main() {
   vec2 st = gl_FragCoord.xy/u_resolution.xy;
   st.x *= u_resolution.x/u_resolution.y;
