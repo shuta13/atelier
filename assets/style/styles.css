@@ -29,18 +29,25 @@ body, html {
   flex-wrap: wrap;
 }
 
-.Contents {
+.ContentsLink {
+  width: 240px;
+  height: 240px;
+  margin: 96px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.ContentsImg {
   width: 240px;
   height: 240px;
   cursor: pointer;
-  margin: 96px;
 }
 
 @media screen and (max-width: 615px) {
   .ContentsWrap {
     justify-content: center;
   }
-  .Contents {
+  .ContentsLink {
     margin-top: 96px;
   }
 }

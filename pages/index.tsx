@@ -10,11 +10,15 @@ const Home = () => {
       <div className="ContentsWrap">
         {reversed.map((content) => (
           <Link href={`/learn/${content.id}`} key={content.id}>
-            <img
-              className="Contents"
-              src={`learn/${content.id}.png`}
-              alt={`${content.id} Image`}
-            />
+            <a
+              className="ContentsLink"
+            >
+              <img
+                className="ContentsImg"
+                src={`learn/${content.id}.png`}
+                alt={`${content.id} Image`}
+              />
+            </a>
           </Link>
         ))}
         {/* {reversed.length % 3 === 1 ? (
