@@ -26,7 +26,7 @@ import {
 const MyGLSL: React.FC<{
   frag: string;
   vert: string;
-  uniforms?: { u_time: number; u_resolution: Array<number> };
+  uniforms?: { u_time: number; u_resolution: Array<number>; u_mouse?: Array<number> };
 }> = ({ frag, vert, uniforms }) => {
   const info = {
     id: "",
@@ -57,6 +57,13 @@ const MyGLSL: React.FC<{
         value:
           uniforms !== undefined
             ? new Vector2(uniforms.u_resolution[0], uniforms.u_resolution[1])
+            : new Vector2()
+      },
+      u_mouse: {
+        type: "v2",
+        value:
+          uniforms !== undefined && uniforms.u_mouse !== undefined
+            ? new Vector2(uniforms.u_mouse[0], uniforms.u_mouse[1])
             : new Vector2()
       }
     };

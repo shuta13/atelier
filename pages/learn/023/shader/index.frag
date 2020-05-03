@@ -7,51 +7,7 @@ precision mediump float;
 
 uniform vec2 u_resolution;
 uniform float u_time;
-
-// ----------------
-
-// vec2 skew (vec2 st) {
-//   vec2 r = vec2(0.0);
-//   r.x = 1.1547*st.x;
-//   r.y = st.y+0.5*r.x;
-//   return r;
-// }
-
-// vec3 simplexGrid (vec2 st) {
-//   vec3 xyz = vec3(0.0);
-
-//   vec2 p = fract(skew(st));
-//   if (p.x > p.y) {
-//       xyz.xy = 1.0-vec2(p.x,p.y-p.x);
-//       xyz.z = p.y;
-//   } else {
-//       xyz.yz = 1.0-vec2(p.x-p.y,p.y);
-//       xyz.x = p.x;
-//   }
-
-//   return fract(xyz);
-// }
-
-// void main() {
-//   vec2 st = gl_FragCoord.xy/u_resolution.xy;
-//   vec3 color = vec3(0.0);
-
-//   // Scale the space to see the grid
-//   st *= 10.;
-
-//   // Show the 2D grid
-//   color.rg = fract(st);
-
-//   // Skew the 2D grid
-//   color.rg = fract(skew(st));
-
-//   // Subdivide the grid into to equilateral triangles
-//   color = simplexGrid(st);
-
-//   gl_FragColor = vec4(color,1.0);
-// }
-
-// ----------------
+uniform vec2 u_mouse;
 
 // Some useful functions
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -126,36 +82,41 @@ float snoise(vec2 v) {
   return 130.0 * dot(m, g);
 }
 
-mat2 rotate2d(float angle){
-    return mat2(cos(angle),-sin(angle),
-                sin(angle),cos(angle));
+float random (in float x) {
+  return fract(sin(x)*1e4);
 }
 
-float lines(in vec2 pos, float b){
-    float scale = 10.0;
-    pos *= scale;
-    return smoothstep(0.0,
-                    .5+b*.5,
-                    abs((sin(pos.x*3.1415)+b*2.0))*.5);
+float random (in vec2 st) {
+  return fract(sin(dot(st.xy, vec2(12.9898,78.233)))* 43758.5453123);
+}
+
+float pattern(vec2 st, vec2 v, float t) {
+  vec2 p = floor(st+v);
+  // return step(t, random(100.+p*.000001)+random(p.x)*0.5 );
+  return step(t, snoise(p));
 }
 
 void main() {
   vec2 st = gl_FragCoord.xy/u_resolution.xy;
   st.x *= u_resolution.x/u_resolution.y;
 
-  st *= .5;
-  vec2 pos = st.yx * vec2(1., 2.);
-  float pattern = pos.x;
-  pos = rotate2d(snoise(pos) + u_time * .2) * pos;
-  pattern = lines(pos, .5);
+  float gridNum = 4. + snoise(st) * 2.;
+  vec2 grid = vec2(gridNum * 2., gridNum);
+  st *= grid;
 
-  // Scale the space in order to see the function
+  vec2 ipos = floor(st);  // integer
+  vec2 fpos = fract(st);  // fraction
+  vec2 vel = vec2(u_time + max(grid.x, grid.y) + snoise(st)); // time
+  vel *= vec2(-1.,0.0) * random(1.0+ipos.y); // direction
 
-  // color = vec3(snoise(st)*.5+.5);
-  vec3 color = vec3(0.0);
-  // color += vec3((1. - pattern) * .8);
-  color -= vec3(mod(pattern, .9), mod(pattern, .5), mod(pattern, .2));
-  color += vec3(pattern * .5);
+  // Assign a random value base on the integer coord
+  vec2 offset = vec2(0.2 * snoise(st), .0);
+  vec3 color = vec3(0.);
+  color.r = pattern(st + offset, vel, 0.5);
+  color.g = pattern(st, vel, 0.5);
+  color.b = pattern(st - offset, vel, 0.5);
 
-  gl_FragColor = vec4(color, 1.0);
+  // Margins
+  color *= step(0.2, fpos.y);
+  gl_FragColor = vec4(1.0 - color, 1.0);
 }
