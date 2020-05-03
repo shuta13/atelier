@@ -8,101 +8,154 @@ precision mediump float;
 uniform vec2 u_resolution;
 uniform float u_time;
 
-vec2 random2(vec2 st){
-  st = vec2( dot(st,vec2(127.1,311.7)),
-            dot(st,vec2(269.5,183.3)) );
-  return -1.0 + 2.0*fract(sin(st)*43758.5453123);
-}
+// ----------------
 
-// Gradient Noise by Inigo Quilez - iq/2013
-// https://www.shadertoy.com/view/XdXGW8
-float noise(vec2 st) {
-  vec2 i = floor(st);
-  vec2 f = fract(st);
-  vec2 u = f*f*(3.0-2.0*f);
-  return mix( mix( dot( random2(i + vec2(0.0,0.0) ), f - vec2(0.0,0.0) ),
-                   dot( random2(i + vec2(1.0,0.0) ), f - vec2(1.0,0.0) ), u.x),
-              mix( dot( random2(i + vec2(0.0,1.0) ), f - vec2(0.0,1.0) ),
-                   dot( random2(i + vec2(1.0,1.0) ), f - vec2(1.0,1.0) ), u.x), u.y);
-}
-
-// 図形の変形
-// mat2 rotate2d(float _angle){
-//     return mat2(cos(_angle),-sin(_angle),
-//                 sin(_angle),cos(_angle));
+// vec2 skew (vec2 st) {
+//   vec2 r = vec2(0.0);
+//   r.x = 1.1547*st.x;
+//   r.y = st.y+0.5*r.x;
+//   return r;
 // }
 
-// float shape(vec2 st, float radius) {
-// 	st = vec2(0.5)-st;
-//   float r = length(st)*2.0;
-//   float a = atan(st.y,st.x);
-//   float m = abs(mod(a+u_time*2.,3.14*2.)-3.14)/3.6;
-//   float f = radius;
-//   m += noise(st+u_time*0.1)*.5;
-//   // a *= 1.+abs(atan(u_time*0.2))*.1;
-//   // a *= 1.+noise(st+u_time*0.1)*0.1;
-//   f += sin(a*50.)*noise(st+u_time*.2)*.1;
-//   f += (sin(a*20.)*.1*pow(m,2.));
-//   return 1.-smoothstep(f,f+0.007,r);
-// }
+// vec3 simplexGrid (vec2 st) {
+//   vec3 xyz = vec3(0.0);
 
-// float shapeBorder(vec2 st, float radius, float width) {
-//   return shape(st,radius)-shape(st,radius-width);
-// }
+//   vec2 p = fract(skew(st));
+//   if (p.x > p.y) {
+//       xyz.xy = 1.0-vec2(p.x,p.y-p.x);
+//       xyz.z = p.y;
+//   } else {
+//       xyz.yz = 1.0-vec2(p.x-p.y,p.y);
+//       xyz.x = p.x;
+//   }
 
-// void main() {
-// 	vec2 st = gl_FragCoord.xy/u_resolution.xy;
-// 	vec3 color = vec3(1.0) * shapeBorder(st,0.8,0.02);
-
-// 	gl_FragColor = vec4( 1.-color, 1.0 );
-// }
-
-// 木目模様
-// mat2 rotate2d(float angle){
-//   return mat2(cos(angle),-sin(angle),
-//               sin(angle),cos(angle));
-// }
-
-// float lines(in vec2 pos, float b){
-//   float scale = 10.0;
-//   pos *= scale;
-//   return 
-//     smoothstep(
-//       0.0, .5 + b * .5, 
-//       abs((sin(pos.x * PI)+b*2.0))*.5
-//     );
+//   return fract(xyz);
 // }
 
 // void main() {
 //   vec2 st = gl_FragCoord.xy/u_resolution.xy;
-//   st.y *= u_resolution.y/u_resolution.x;
-//   vec2 pos = st.yx * vec2(10.,3.);
-//   float pattern = pos.x;
+//   vec3 color = vec3(0.0);
 
-//   // Add noise
-//   pos = rotate2d( noise(pos + u_time) ) * pos;
+//   // Scale the space to see the grid
+//   st *= 10.;
 
-//   // Draw lines
-//   pattern = lines(pos,.5);
-//   gl_FragColor = vec4(vec3(pattern) ,1.0);
+//   // Show the 2D grid
+//   color.rg = fract(st);
+
+//   // Skew the 2D grid
+//   color.rg = fract(skew(st));
+
+//   // Subdivide the grid into to equilateral triangles
+//   color = simplexGrid(st);
+
+//   gl_FragColor = vec4(color,1.0);
 // }
 
-// 大理石模様 -> ナイロン
+// ----------------
+
+// Some useful functions
+vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+
+//
+// Description : GLSL 2D simplex noise function
+//      Author : Ian McEwan, Ashima Arts
+//  Maintainer : ijm
+//     Lastmod : 20110822 (ijm)
+//     License :
+//  Copyright (C) 2011 Ashima Arts. All rights reserved.
+//  Distributed under the MIT License. See LICENSE file.
+//  https://github.com/ashima/webgl-noise
+//
+float snoise(vec2 v) {
+  // Precompute values for skewed triangular grid
+  const vec4 C = vec4(0.211324865405187,
+                      // (3.0-sqrt(3.0))/6.0
+                      0.366025403784439,
+                      // 0.5*(sqrt(3.0)-1.0)
+                      -0.577350269189626,
+                      // -1.0 + 2.0 * C.x
+                      0.024390243902439);
+                      // 1.0 / 41.0
+
+  // First corner (x0)
+  vec2 i  = floor(v + dot(v, C.yy));
+  vec2 x0 = v - i + dot(i, C.xx);
+
+  // Other two corners (x1, x2)
+  vec2 i1 = vec2(0.0);
+  i1 = (x0.x > x0.y)? vec2(1.0, 0.0):vec2(0.0, 1.0);
+  vec2 x1 = x0.xy + C.xx - i1;
+  vec2 x2 = x0.xy + C.zz;
+
+  // Do some permutations to avoid
+  // truncation effects in permutation
+  i = mod289(i);
+  vec3 p = permute(
+          permute( i.y + vec3(0.0, i1.y, 1.0))
+              + i.x + vec3(0.0, i1.x, 1.0 ));
+
+  vec3 m = max(0.5 - vec3(
+                      dot(x0,x0),
+                      dot(x1,x1),
+                      dot(x2,x2)
+                      ), 0.0);
+
+  m = m*m ;
+  m = m*m ;
+
+  // Gradients:
+  //  41 pts uniformly over a line, mapped onto a diamond
+  //  The ring size 17*17 = 289 is close to a multiple
+  //      of 41 (41*7 = 287)
+
+  vec3 x = 2.0 * fract(p * C.www) - 1.0;
+  vec3 h = abs(x) - 0.5;
+  vec3 ox = floor(x + 0.5);
+  vec3 a0 = x - ox;
+
+  // Normalise gradients implicitly by scaling m
+  // Approximation of: m *= inversesqrt(a0*a0 + h*h);
+  m *= 1.79284291400159 - 0.85373472095314 * (a0*a0+h*h);
+
+  // Compute final noise value at P
+  vec3 g = vec3(0.0);
+  g.x  = a0.x  * x0.x  + h.x  * x0.y;
+  g.yz = a0.yz * vec2(x1.x,x2.x) + h.yz * vec2(x1.y,x2.y);
+  return 130.0 * dot(m, g);
+}
+
+mat2 rotate2d(float angle){
+    return mat2(cos(angle),-sin(angle),
+                sin(angle),cos(angle));
+}
+
+float lines(in vec2 pos, float b){
+    float scale = 10.0;
+    pos *= scale;
+    return smoothstep(0.0,
+                    .5+b*.5,
+                    abs((sin(pos.x*3.1415)+b*2.0))*.5);
+}
+
 void main() {
   vec2 st = gl_FragCoord.xy/u_resolution.xy;
   st.x *= u_resolution.x/u_resolution.y;
+
+  st *= .5;
+  vec2 pos = st.yx * vec2(1., 2.);
+  float pattern = pos.x;
+  pos = rotate2d(snoise(pos) + u_time * .2) * pos;
+  pattern = lines(pos, .5);
+
+  // Scale the space in order to see the function
+
+  // color = vec3(snoise(st)*.5+.5);
   vec3 color = vec3(0.0);
-  float t = 1.;
-  st += noise(st * 2.) * t;
+  // color += vec3((1. - pattern) * .8);
+  color -= vec3(mod(pattern, .9), mod(pattern, .5), mod(pattern, .2));
+  color += vec3(pattern * .5);
 
-  if (mod(u_time, 6.) > 4.0) {
-    color += vec3(mix(st.y, st.y, noise(st * 4.)), .4, .4);
-  } else if (mod(u_time, 6.) < 4.0 && mod(u_time, 6.) > 2.0) {
-    color += vec3(.75, mix(st.y, st.y, noise(st * 4.)), .8);
-  } else {
-    color += vec3(.2, .7, mix(st.y, st.y, noise(st * 4.)) * .8);
-  }
-
-  color += smoothstep(.0, .9, noise(st * 4. + u_time * 2.));
   gl_FragColor = vec4(color, 1.0);
 }
