@@ -101,7 +101,7 @@ void main() {
   } else if (mod(u_time, 6.) < 4.0 && mod(u_time, 6.) > 2.0) {
     color += vec3(.75, mix(st.y, st.y, noise(st * 4.)), .8);
   } else {
-    color += vec3(.2, .7, mix(st.y, st.y, noise(st * 4.)) * .8);
+    color += vec3(mix(st.y, st.y, noise(st * 4.)) * .8);
   }
 
   // 光沢
