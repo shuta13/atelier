@@ -2,18 +2,19 @@
 precision mediump float;
 #endif
 
+
 #define PI 3.14159265359
 #define TWO_PI 6.28318530718
-
-#define SPHERE_SIZE 1.
-#define LIGHT_DIR vec3(-.577, .577, .577)
-
-#define ANGLE 60.
-#define FOV ANGLE * .5 * PI / 180.
 
 uniform vec2 u_resolution;
 uniform float u_time;
 uniform vec2 u_mouse;
+
+// refer : https://wgld.org/d/glsl/g013.html
+#define SPHERE_SIZE 1.
+#define LIGHT_DIR vec3(-.577, .577, .577)
+#define ANGLE 60.
+#define FOV ANGLE * .5 * PI / 180.
 
 vec3 trans(vec3 p) {
   float v = 4.;
@@ -44,7 +45,7 @@ void main() {
   vec2 p = (gl_FragCoord.xy * 2. - u_resolution) / min(u_resolution.x, u_resolution.y);
 
   // camera
-  vec3 camPos = vec3(0., 0., 2.); // カメラの位置
+  vec3 camPos = vec3(0., 0., 2. - u_time * 2.); // カメラの位置
   vec3 camDir = vec3(0., 0., -1.); // カメラの向き
   vec3 camUp = vec3(0., 1., 0.); // カメラの上方向
   vec3 camSide = cross(camDir, camUp); // 外積でカメラの横方向を算出
@@ -68,7 +69,7 @@ void main() {
   if (abs(distance) < .001) {
     vec3 normal = getNormal(rayPos);
     float diff = clamp(dot(LIGHT_DIR, normal), .1, 1.);
-    gl_FragColor = vec4(vec3(diff), 1.);
+    gl_FragColor = vec4(vec3(.1, .3, diff), 1.);
   } else {
     gl_FragColor = vec4(vec3(0.), 1.);
   }
