@@ -62,12 +62,12 @@ void main() {
     color = vec3(step(d, .2));
   } else if (mod(u_time, N) < 12. && mod(u_time, N) > 10.) {
     // 六角形のタイリング
+    // ボロノイ図(https://ja.wikipedia.org/wiki/%E3%83%9C%E3%83%AD%E3%83%8E%E3%82%A4%E5%9B%B3)の計算
     p *= 4.;
     vec2 r = normalize(vec2(1., 1.73));
     vec2 h = r * .5;
     vec2 a = mod(p, r) - h;
     vec2 b = mod(p - h, r) - h;
-    // ボロノイ図(https://ja.wikipedia.org/wiki/%E3%83%9C%E3%83%AD%E3%83%8E%E3%82%A4%E5%9B%B3)の計算
     color.rg = length(a) < length(b) ? a : b;
   } else if (mod(u_time, N) < 14. && mod(u_time, N) > 12.) {
     p *= 4.;
@@ -75,16 +75,15 @@ void main() {
     vec2 h = r * .5;
     vec2 a = mod(p, r) - h;
     vec2 b = mod(p - h, r) - h;
-    color.rg = length(a) < length(b) ? a : b;
     // タイリングした六角形にIDをふる
     vec2 g = length(a) < length(b) ? a : b;
     vec2 id = p - g;
     color.rg = id * .2;
   } else {
-    // 中心から波打つような模様を描く
+    // 中心から模様を描く
     p *= 4.;
     vec4 hc = hexCoords(p);
-    float wavy = pow(sin(length(hc.zw) * .5), 4.) + .1;
+    float wavy = pow(sin(length(hc.zw) * cos(length(hc.zw)) * .5), 4.) + .1;
     // float wavy = pow(sin(length(hc.zw) - u_time * .5), 4.) + .1;
     // 六角形のフレームを描画
     float c = smoothstep(0., .2, hc.y);
