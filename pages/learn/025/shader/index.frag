@@ -160,7 +160,7 @@ void main() {
     // 中心から模様を描く
     p *= 4.;
     vec4 hc = hexCoords(p);
-    float wavy = snoise(hc.zw - u_time);
+    float wavy = snoise(sin(hc.zw - u_time));
     // float wavy = pow(sin(length(hc.zw) * cos(length(hc.zw)) * .5), 4.) + .1;
     // float wavy = pow(sin(length(hc.zw) - u_time * .5), 4.) + .1;
     // 六角形のフレームを描画
