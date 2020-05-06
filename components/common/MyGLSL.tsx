@@ -48,6 +48,7 @@ const MyGLSL: React.FC<{
     }
   });
   const onCanvasLoaded = (canvas: HTMLCanvasElement) => {
+    console.log(uniforms?.u_texture)
     if (!canvas) return;
     const scene = new Scene();
     const camera = new OrthographicCamera(-1, 1, 1, -1, 0, -1);
@@ -74,7 +75,7 @@ const MyGLSL: React.FC<{
       },
       u_texture: {
         type: "t",
-        value: uniforms?.u_texture !== undefined ? new TextureLoader().load(require("../../assets/image/drink.jpg")) : null
+        value: uniforms?.u_texture !== undefined ? new TextureLoader().load(uniforms.u_texture) : null
       }
     };
     const material = new RawShaderMaterial({
