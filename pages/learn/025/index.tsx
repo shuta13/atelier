@@ -15,14 +15,14 @@ const _025: React.FC = () => {
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current);
   }, [animate]);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const handleMouseMove = (e: MouseEvent) => {
-    setMousePosition({ x: e.clientX-400, y: e.clientY+200 })
-  }
+    setMousePosition({ x: e.clientX - 400, y: e.clientY + 200 });
+  };
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  })
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  });
   return (
     <MyGLSL
       frag={frag.default}

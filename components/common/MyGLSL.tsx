@@ -26,7 +26,11 @@ import {
 const MyGLSL: React.FC<{
   frag: string;
   vert: string;
-  uniforms?: { u_time: number; u_resolution: Array<number>; u_mouse?: Array<number> };
+  uniforms?: {
+    u_time: number;
+    u_resolution: Array<number>;
+    u_mouse?: Array<number>;
+  };
 }> = ({ frag, vert, uniforms }) => {
   const info = {
     id: "",
@@ -57,25 +61,25 @@ const MyGLSL: React.FC<{
         value:
           uniforms !== undefined
             ? new Vector2(uniforms.u_resolution[0], uniforms.u_resolution[1])
-            : new Vector2()
+            : new Vector2(),
       },
       u_mouse: {
         type: "v2",
         value:
           uniforms !== undefined && uniforms.u_mouse !== undefined
             ? new Vector2(uniforms.u_mouse[0], uniforms.u_mouse[1])
-            : new Vector2()
-      }
+            : new Vector2(),
+      },
     };
     const material = new RawShaderMaterial({
       uniforms: _uniforms,
       vertexShader: vert,
-      fragmentShader: frag
-    })
+      fragmentShader: frag,
+    });
     const mesh = new Mesh(geometry, material);
     scene.add(mesh);
     const renderer = new WebGLRenderer({ canvas: canvas, antialias: false });
-    renderer.setClearColor("#1d1d1d")
+    renderer.setClearColor("#1d1d1d");
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(400, 400);
     renderer.render(scene, camera);

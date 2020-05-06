@@ -22,7 +22,7 @@ const _003: React.FC = () => {
       uniforms={{
         u_resolution: [800, 800],
         // u_mouse: [x, y],
-        u_time: uTime
+        u_time: uTime,
       }}
     />
   );

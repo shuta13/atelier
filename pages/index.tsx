@@ -10,9 +10,7 @@ const Home = () => {
       <div className="ContentsWrap">
         {reversed.map((content) => (
           <Link href={`/learn/${content.id}`} key={content.id}>
-            <a
-              className="ContentsLink"
-            >
+            <a className="ContentsLink">
               <img
                 className="ContentsImg"
                 src={`learn/${content.id}.png`}

@@ -5,6 +5,7 @@
   background: #1d1d1d40;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   z-index: 10000;
 }
 
@@ -13,4 +14,14 @@
   margin-left: 32px;
   color: #fff;
   text-decoration: none;
+}
+
+.HeaderGithubLink {
+  text-decoration: none;
+  margin-right: 24px;
+}
+
+.HeaderGithubIcon {
+  color: #969696;
+  font-size: 3rem;
 }
