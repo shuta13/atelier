@@ -48,7 +48,6 @@ const MyGLSL: React.FC<{
     }
   });
   const onCanvasLoaded = (canvas: HTMLCanvasElement) => {
-    console.log(uniforms?.u_texture)
     if (!canvas) return;
     const scene = new Scene();
     const camera = new OrthographicCamera(-1, 1, 1, -1, 0, -1);
