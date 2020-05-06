@@ -12,6 +12,7 @@ uniform sampler2D u_texture;
 
 void main() {
   vec2 st = gl_FragCoord.xy / u_resolution.xy;
-  vec4 color = texture2D(u_texture, st);
+  vec4 color = vec4(1.);
+  color = texture2D(u_texture, st); // vec4(0.0)っぽい
   gl_FragColor = color;
 }
