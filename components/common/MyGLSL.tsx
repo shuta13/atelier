@@ -9,6 +9,7 @@ import {
   RawShaderMaterial,
   Mesh,
   Vector2,
+  TextureLoader
 } from "three";
 // import html2canvas from "html2canvas";
 
@@ -30,6 +31,7 @@ const MyGLSL: React.FC<{
     u_time: number;
     u_resolution: Array<number>;
     u_mouse?: Array<number>;
+    u_texture?: string;
   };
 }> = ({ frag, vert, uniforms }) => {
   const info = {
@@ -70,6 +72,10 @@ const MyGLSL: React.FC<{
             ? new Vector2(uniforms.u_mouse[0], uniforms.u_mouse[1])
             : new Vector2(),
       },
+      u_texture: {
+        type: "t",
+        value: uniforms?.u_texture !== undefined ? new TextureLoader().load(require("../../assets/image/drink.jpg")) : null
+      }
     };
     const material = new RawShaderMaterial({
       uniforms: _uniforms,
