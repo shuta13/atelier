@@ -9,7 +9,8 @@ import {
   RawShaderMaterial,
   Mesh,
   Vector2,
-  TextureLoader
+  TextureLoader,
+  Clock
 } from "three";
 // import html2canvas from "html2canvas";
 
@@ -29,13 +30,14 @@ type AnimateParams = {
   camera: OrthographicCamera;
   renderer: WebGLRenderer;
   _uniforms: any;
+  clock: Clock
 }
 
 const MyGLSL: React.FC<{
   frag: string;
   vert: string;
   uniforms?: {
-    u_time: number;
+    u_time?: number;
     u_resolution: Array<number>;
     u_mouse?: Array<number>;
     u_texture?: string;
@@ -54,8 +56,9 @@ const MyGLSL: React.FC<{
       info.desc = content.desc;
     }
   });
-  const animate = ({ scene, camera, renderer, _uniforms }: AnimateParams) => {
-    requestAnimationFrame(() => animate({ scene, camera, renderer, _uniforms }))
+  const animate = ({ scene, camera, renderer, _uniforms, clock }: AnimateParams) => {
+    requestAnimationFrame(() => animate({ scene, camera, renderer, _uniforms, clock }))
+    _uniforms.u_time.value = performance.now() * .001
     renderer.render(scene, camera)
   }
   const onCanvasLoaded = (canvas: HTMLCanvasElement) => {
@@ -67,7 +70,7 @@ const MyGLSL: React.FC<{
     const _uniforms = {
       u_time: {
         type: "f",
-        value: uniforms !== undefined ? uniforms.u_time : 1.0,
+        value: 0.0
       },
       u_resolution: {
         type: "v2",
@@ -100,7 +103,9 @@ const MyGLSL: React.FC<{
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(400, 400);
     renderer.render(scene, camera);
-    animate({ scene, camera, renderer, _uniforms });
+    const clock = new Clock()
+    clock.start()
+    animate({ scene, camera, renderer, _uniforms, clock });
   };
   return (
     <div className="container">

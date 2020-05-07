@@ -12,7 +12,7 @@ const _001: React.FC = () => {
       uniforms={{
         u_resolution: [800, 800],
         // u_mouse: [x, y],
-        u_time: 1.0,
+        // u_time: 1.0,
       }}
     />
   );

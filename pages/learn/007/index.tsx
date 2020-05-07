@@ -5,16 +5,16 @@ const frag = require("./shader/index.frag");
 const vert = require("./shader/index.vert");
 
 const _007: React.FC = () => {
-  const [uTime, setUTime] = useState(0.0);
-  const requestRef = useRef(0.0);
-  const animate = useCallback(() => {
-    setUTime(performance.now() * 0.001);
-    requestRef.current = requestAnimationFrame(animate);
-  }, []);
-  useEffect(() => {
-    requestRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(requestRef.current);
-  }, [animate]);
+  // const [uTime, setUTime] = useState(0.0);
+  // const requestRef = useRef(0.0);
+  // const animate = useCallback(() => {
+  //   setUTime(performance.now() * 0.001);
+  //   requestRef.current = requestAnimationFrame(animate);
+  // }, []);
+  // useEffect(() => {
+  //   requestRef.current = requestAnimationFrame(animate);
+  //   return () => cancelAnimationFrame(requestRef.current);
+  // }, [animate]);
   return (
     <MyGLSL
       frag={frag.default}
@@ -22,7 +22,7 @@ const _007: React.FC = () => {
       uniforms={{
         u_resolution: [800, 800],
         // u_mouse: [x, y],
-        u_time: uTime,
+        // u_time: uTime,
       }}
     />
   );
