@@ -24,6 +24,13 @@ import {
 //     })
 // }
 
+type AnimateParams = {
+  scene: Scene;
+  camera: OrthographicCamera;
+  renderer: WebGLRenderer;
+  _uniforms: any;
+}
+
 const MyGLSL: React.FC<{
   frag: string;
   vert: string;
@@ -47,6 +54,10 @@ const MyGLSL: React.FC<{
       info.desc = content.desc;
     }
   });
+  const animate = ({ scene, camera, renderer, _uniforms }: AnimateParams) => {
+    requestAnimationFrame(() => animate({ scene, camera, renderer, _uniforms }))
+    renderer.render(scene, camera)
+  }
   const onCanvasLoaded = (canvas: HTMLCanvasElement) => {
     if (!canvas) return;
     const scene = new Scene();
@@ -74,7 +85,7 @@ const MyGLSL: React.FC<{
       },
       u_texture: {
         type: "t",
-        value: uniforms?.u_texture !== undefined ? new TextureLoader().load(uniforms.u_texture) : null
+        value: new TextureLoader().load(uniforms?.u_texture !== undefined ? uniforms.u_texture : "")
       }
     };
     const material = new RawShaderMaterial({
@@ -89,6 +100,7 @@ const MyGLSL: React.FC<{
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(400, 400);
     renderer.render(scene, camera);
+    animate({ scene, camera, renderer, _uniforms });
   };
   return (
     <div className="container">

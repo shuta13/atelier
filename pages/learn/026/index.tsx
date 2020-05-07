@@ -4,7 +4,7 @@ import MyGLSL from "../../../components/common/MyGLSL";
 const frag = require("./shader/index.frag");
 const vert = require("./shader/index.vert");
 
-const uTexture = "/learn/001.png"
+const uTexture = require("../../../assets/image/drink.jpg")
 
 const _026: React.FC = () => {
   const [uTime, setUTime] = useState(0.0);
