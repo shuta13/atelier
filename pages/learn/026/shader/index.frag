@@ -12,7 +12,18 @@ uniform sampler2D u_texture;
 
 void main() {
   vec2 st = gl_FragCoord.xy / u_resolution.xy;
-  vec3 color = texture2D(u_texture, st).rgb; // vec4(0.0)っぽい
-  color += vec3(.3);
+  vec3 color = vec3(0.);
+  // https://www-ui.is.s.u-tokyo.ac.jp/~o/Computer/Note/010106-ColorRepresentation/
+  float r = texture2D(u_texture, st).r;
+  float g = texture2D(u_texture, st).g;
+  float b = texture2D(u_texture, st).b;
+  float y = .299 * r + .578 * g + .114 * b * r;
+  float i = .569 * r - .274 * g + .322* b * g;
+  float q = .211 * r - .523 * g + .0312 * b * b;
+  if (mod(u_time, 4.) < 2.) {
+    color = vec3(r, g, b);
+  } else {
+    color = vec3(y, i, q);
+  }
   gl_FragColor = vec4(color, 1.);
 }
