@@ -4,7 +4,7 @@ import MyGLSL from "../../../components/common/MyGLSL";
 const frag = require("./shader/index.frag");
 const vert = require("./shader/index.vert");
 
-const uTexture = require("../../../assets/image/drink.jpg")
+const uTexture = require("../../../assets/image/drink.jpg");
 
 const _026: React.FC = () => {
   return (
@@ -12,7 +12,7 @@ const _026: React.FC = () => {
       frag={frag.default}
       vert={vert.default}
       uniforms={{
-        u_texture: uTexture
+        u_texture: uTexture,
       }}
     />
   );

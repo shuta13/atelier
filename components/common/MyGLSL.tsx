@@ -10,7 +10,7 @@ import {
   Mesh,
   Vector2,
   TextureLoader,
-  Clock
+  Clock,
 } from "three";
 // import html2canvas from "html2canvas";
 
@@ -30,8 +30,8 @@ type AnimateParams = {
   camera: OrthographicCamera;
   renderer: WebGLRenderer;
   _uniforms: any;
-  clock: Clock
-}
+  clock: Clock;
+};
 
 const MyGLSL: React.FC<{
   frag: string;
@@ -54,11 +54,19 @@ const MyGLSL: React.FC<{
       info.desc = content.desc;
     }
   });
-  const animate = ({ scene, camera, renderer, _uniforms, clock }: AnimateParams) => {
-    requestAnimationFrame(() => animate({ scene, camera, renderer, _uniforms, clock }))
-    _uniforms.u_time.value = performance.now() * .001
-    renderer.render(scene, camera)
-  }
+  const animate = ({
+    scene,
+    camera,
+    renderer,
+    _uniforms,
+    clock,
+  }: AnimateParams) => {
+    requestAnimationFrame(() =>
+      animate({ scene, camera, renderer, _uniforms, clock })
+    );
+    _uniforms.u_time.value = performance.now() * 0.001;
+    renderer.render(scene, camera);
+  };
   const onCanvasLoaded = (canvas: HTMLCanvasElement) => {
     if (!canvas) return;
     const scene = new Scene();
@@ -68,7 +76,7 @@ const MyGLSL: React.FC<{
     const _uniforms = {
       u_time: {
         type: "f",
-        value: 0.0
+        value: 0.0,
       },
       u_resolution: {
         type: "v2",
@@ -77,7 +85,7 @@ const MyGLSL: React.FC<{
             ? window.devicePixelRatio === 1
               ? new Vector2(400, 400)
               : new Vector2(800, 800)
-            : new Vector2()
+            : new Vector2(),
       },
       u_mouse: {
         type: "v2",
@@ -88,8 +96,10 @@ const MyGLSL: React.FC<{
       },
       u_texture: {
         type: "t",
-        value: new TextureLoader().load(uniforms?.u_texture !== undefined ? uniforms.u_texture : "")
-      }
+        value: new TextureLoader().load(
+          uniforms?.u_texture !== undefined ? uniforms.u_texture : ""
+        ),
+      },
     };
     const material = new RawShaderMaterial({
       uniforms: _uniforms,
@@ -103,8 +113,8 @@ const MyGLSL: React.FC<{
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(400, 400);
     renderer.render(scene, camera);
-    const clock = new Clock()
-    clock.start()
+    const clock = new Clock();
+    clock.start();
     animate({ scene, camera, renderer, _uniforms, clock });
   };
   return (

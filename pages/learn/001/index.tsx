@@ -5,17 +5,7 @@ const frag = require("./shader/index.frag");
 const vert = require("./shader/index.vert");
 
 const _001: React.FC = () => {
-  return (
-    <MyGLSL
-      frag={frag.default}
-      vert={vert.default}
-      uniforms={{
-        u_resolution: [800, 800],
-        // u_mouse: [x, y],
-        // u_time: 1.0,
-      }}
-    />
-  );
+  return <MyGLSL frag={frag.default} vert={vert.default} uniforms={{}} />;
 };
 
 export default _001;
