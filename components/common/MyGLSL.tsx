@@ -37,8 +37,6 @@ const MyGLSL: React.FC<{
   frag: string;
   vert: string;
   uniforms?: {
-    u_time?: number;
-    u_resolution: Array<number>;
     u_mouse?: Array<number>;
     u_texture?: string;
   };
@@ -76,8 +74,10 @@ const MyGLSL: React.FC<{
         type: "v2",
         value:
           uniforms !== undefined
-            ? new Vector2(uniforms.u_resolution[0], uniforms.u_resolution[1])
-            : new Vector2(),
+            ? window.devicePixelRatio === 1
+              ? new Vector2(400, 400)
+              : new Vector2(800, 800)
+            : new Vector2()
       },
       u_mouse: {
         type: "v2",
