@@ -98,7 +98,7 @@ void main() {
   vec3 color = vec3(0.);
 
   // mosaic
-  float size = 90.;
+  float size = 80.;
   // uv = vec2(floor(uv * size)) / size;
 
   // neutral
@@ -112,13 +112,16 @@ void main() {
   // color -= snoise(vec3(uv.x, uv.y, 1.9));
 
   // glitch
-  if (mod(uv.y * 10., 2.) < 1. && mod(u_time, 2.) < 3. * snoise(vec3(uv.y, uv.y, u_time * 40.))) {
+  if (mod(u_time, 2.) < 3. * snoise(vec3(uv.y, uv.y, u_time * 10.))) {
     uv = vec2(floor(uv * size)) / size;
-    color = texture2D(u_texture, vec2(uv.x - .01, uv.y)).rgb;
-  } else {
+    size += 10.;
+    color = texture2D(u_texture, vec2(uv.x, uv.y)).rgb;
+  } else if (mod(u_time * 1.5, 3.) < 2.) {
     color.r = texture2D(u_texture, vec2(uv.x + .015, uv.y)).r;
     color.g = texture2D(u_texture, vec2(uv.x, uv.y - .005)).g;
     color.b = texture2D(u_texture, vec2(uv.x - .015, uv.y)).b;
+  } else {
+    color = texture2D(u_texture, vec2(uv.x - .07 * snoise(vec3(uv.y, uv.y, u_time * 10.)), uv.y + .07 * snoise(vec3(uv.y, uv.y, u_time * 10.)))).rgb;
   }
 
   gl_FragColor = vec4(color, 1.);
