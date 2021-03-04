@@ -49,6 +49,6 @@ html {
     justify-content: center;
   }
   .ContentsLink {
-    margin-top: 96px;
+    margin: 96px 0;
   }
 }

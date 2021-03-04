@@ -1,6 +1,6 @@
-import React from "react";
-import contents from "../assets/data/contents.json";
-import Link from "next/link";
+import React from 'react';
+import contents from '../assets/data/contents.json';
+import Link from 'next/link';
 
 const reversed = contents.reverse();
 
@@ -19,14 +19,6 @@ const Home = () => {
             </a>
           </Link>
         ))}
-        {/* {reversed.length % 3 === 1 ? (
-          <>
-            <img className="Contents" src="" alt="" />
-            <img className="Contents" src="" alt="" />
-          </>
-        ) : reversed.length % 3 === 2 ? (
-          <img className="Contents" src="" alt="" />
-        ) : null} */}
       </div>
     </div>
   );
