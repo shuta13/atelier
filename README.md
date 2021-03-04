@@ -1,3 +1,7 @@
-# learn-webgl
-https://learn-webgl.now.sh
-> WebGL(GLSL)の勉強 + 習作
+# atelier
+
+![](assets/image/readme/top.png)
+
+### ref
+
+- https://thebookofshaders.com/
